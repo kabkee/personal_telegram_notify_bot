@@ -1,0 +1,19 @@
+{
+    "name": "nofiDeliveryBot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node app.js",
+        "startmon": "nodemon app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "nodemon": "^2.0.2",
+        "telebot": "^1.2.6",
+        "telegraf": "^3.36.0"
+    }
+}
