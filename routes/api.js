@@ -53,16 +53,19 @@ router.post('/send/slack', function(req, res, next) {
     //     })();
     // }
 
-    var postData = {
-        text: req.body.msg
-    }
-    axios.post(process.env.SLACK_WEB_HOOK_URL, postData)
-        .then((result) => {})
-        .catch((err) => {
-            console.error(err);
-        })
+    if (req.body.msg) {
+        var postData = {
+            text: req.body.msg
+        }
+        axios.post(process.env.SLACK_WEB_HOOK_URL, postData)
+            .then((result) => {})
+            .catch((err) => {
+                console.error(err);
+            })
 
-    res.send(`Current Time :: ${new Date()}`)
+
+        res.send(`Current Time :: ${new Date()}`)
+    }
 });
 
 module.exports = router;
