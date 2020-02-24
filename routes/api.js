@@ -1,21 +1,58 @@
 var express = require('express');
-let bot = require('../components/Telegram')
 var router = express.Router();
 
 require('dotenv').config()
-const chat_id_with_kabkee = process.env.CHAT_ID_WITH_KABKEE
 
-router.get('/send/kabkee/:msg?', function(req, res, next) {
+router.post('/send/telegram', function(req, res, next) {
+    let bot = require('../components/Telegram')
+    const chat_id_with_kabkee = process.env.CHAT_ID_WITH_KABKEE
+    const currentTime = new Date().toTimeString();
     let sendMsg;
-    if (!req.params.msg) {
-        sendMsg = 'Say Hello to Kabkee'
+
+    if (!req.body.msg) {
+        sendMsg = `Say Hello to Kabkee, ${currentTime}`;
     } else {
-        sendMsg = req.params.msg;
+        sendMsg = req.body.msg;
     }
     bot.telegram.sendMessage(chat_id_with_kabkee, sendMsg)
 
     res.send(`Current Time :: ${new Date()}`)
 });
 
+router.post('/send/slack', function(req, res, next) {
+    let bot = require('../components/Slack');
+    if (req.body.msg) {
+        (async() => {
+            try {
+                // Use the `chat.postMessage` method to send a message from this app
+                await bot.chat.postMessage({
+                    channel: '#look360slackbot',
+                    text: req.body.msg,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('Message posted!');
+        })();
+    } else {
+        // The current date
+        const currentTime = new Date().toTimeString();
+
+        (async() => {
+            try {
+                // Use the `chat.postMessage` method to send a message from this app
+                await bot.chat.postMessage({
+                    channel: '#look360slackbot',
+                    text: `The current time is ${currentTime}`,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('Message posted!');
+        })();
+    }
+
+    res.send(`Current Time :: ${new Date()}`)
+});
 
 module.exports = router;

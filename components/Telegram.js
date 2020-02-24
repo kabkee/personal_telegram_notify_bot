@@ -1,7 +1,7 @@
 const Telegraf = require('telegraf')
 require('dotenv').config()
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
 const chat_id_with_kabkee = process.env.CHAT_ID_WITH_KABKEE
 
 function sleep(millis) {
