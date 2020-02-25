@@ -21,51 +21,51 @@ router.post('/send/telegram', function(req, res, next) {
 });
 
 router.post('/send/slack', function(req, res, next) {
-    // let bot = require('../components/Slack');
-    // if (req.body.msg) {
-    //     (async() => {
-    //         try {
-    //             // Use the `chat.postMessage` method to send a message from this app
-    //             await bot.chat.postMessage({
-    //                 channel: '#look360slackbot',
-    //                 text: req.body.msg,
-    //             });
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //         console.log('Message posted!');
-    //     })();
-    // } else {
-    //     // The current date
-    //     const currentTime = new Date().toTimeString();
-
-    //     (async() => {
-    //         try {
-    //             // Use the `chat.postMessage` method to send a message from this app
-    //             await bot.chat.postMessage({
-    //                 channel: '#look360slackbot',
-    //                 text: `The current time is ${currentTime}`,
-    //             });
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //         console.log('Message posted!');
-    //     })();
-    // }
-
+    let bot = require('../components/Slack');
     if (req.body.msg) {
-        var postData = {
-            text: req.body.msg
-        }
-        axios.post(process.env.SLACK_WEB_HOOK_URL, postData)
-            .then((result) => {})
-            .catch((err) => {
-                console.error(err);
-            })
+        (async() => {
+            try {
+                // Use the `chat.postMessage` method to send a message from this app
+                await bot.chat.postMessage({
+                    channel: '#look360slackbot',
+                    text: req.body.msg,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('Message posted!');
+        })();
+    } else {
+        // The current date
+        const currentTime = new Date().toTimeString();
 
-
-        res.send(`Current Time :: ${new Date()}`)
+        (async() => {
+            try {
+                // Use the `chat.postMessage` method to send a message from this app
+                await bot.chat.postMessage({
+                    channel: '#look360slackbot',
+                    text: `The current time is ${currentTime}`,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            console.log('Message posted!');
+        })();
     }
+
+    // if (req.body.msg) {
+    //     var postData = {
+    //         text: req.body.msg
+    //     }
+    //     axios.post(process.env.SLACK_WEB_HOOK_URL, postData)
+    //         .then((result) => {})
+    //         .catch((err) => {
+    //             console.error(err);
+    //         })
+
+
+    // 	}
+    res.send(`Current Time :: ${new Date()}`)
 });
 
 module.exports = router;
